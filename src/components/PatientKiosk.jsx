@@ -3,10 +3,15 @@ import { Mic, MicOff, Loader2, AlertCircle, Send, FileText, Camera, CheckCircle,
 import { startListening } from '../services/SpeechService';
 import { processTriage, generateFollowUpQuestion, runSafetyReviewAgent, runBillingAgent, runPharmacovigilanceAgent } from '../services/AIEngine';
 import { scanMedicalRecord, scanRadiologyImage } from '../services/VisionService';
-import TouchlessVitals from './TouchlessVitals';
 import CustomLanguageSelector from './CustomLanguageSelector';
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const PatientKiosk = ({ onTriageComplete }) => {
+  const createUser = useMutation(api.users.createUser);
+const createAppointment = useMutation(api.appointments.createAppointment);
+const saveChat = useMutation(api.chat.saveChat);
+const savePatientRecord = useMutation(api.patientRecords.addPatientRecord);
   const [isListening, setIsListening] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [language, setLanguage] = useState('hi-IN');
@@ -237,19 +242,20 @@ const PatientKiosk = ({ onTriageComplete }) => {
       
       let aiQuestion = aiFollowUp.question;
 
-      // Check if we meet the minimum conversation depth to allow triage
       const canTriage = newHistory.length >= 3;
-      
       // Proceed to triage ONLY if AI is ready AND minimum turns met, or max depth reached
       if ((aiFollowUp.readyForTriage && canTriage) || newHistory.length >= 6) { 
         const triageData = await processTriage(newHistory, languageName, pastMedicalHistory, visualFindings, patientId);
-        setCurrentTriageData(triageData);
-        setStep('vitals');
+        await handleTriageCompleteDirectly(triageData);
       } else if (aiQuestion && aiQuestion.trim() !== '') {
         // Ask next question (even if AI set readyForTriage=true but we haven't met min depth)
         setCurrentFollowUpQuestion(aiQuestion);
         setChatHistory([...newHistory, { role: 'ai', content: aiQuestion }]);
-        speakText(aiQuestion);
+        await saveChat({
+  question: newHistory[newHistory.length - 1].content,
+  answer: aiQuestion,
+});
+       speakText(aiQuestion);
       } else {
         // AI returned no question and we aren't allowed to triage yet.
         throw new Error("AI failed to generate a follow-up question.");
@@ -277,6 +283,17 @@ const PatientKiosk = ({ onTriageComplete }) => {
       return;
     }
     const finalTranscript = manualText || transcript;
+    await createUser({
+  name: patientId,
+  email: `${patientId}@sanjeevani.ai`,
+  phone: "Not Provided",
+  role: "Patient",
+});
+
+await saveChat({
+  question: finalTranscript,
+  answer: "",
+});
     if (!finalTranscript) return;
     
     if (recognitionRef.current) {
@@ -318,28 +335,28 @@ const PatientKiosk = ({ onTriageComplete }) => {
     }
   };
 
-  const handleVitalsComplete = async (bpm, painIndex) => {
+  const handleTriageCompleteDirectly = async (triageData) => {
     setIsProcessing(true);
     
     // Calculate dynamic wait time based on AI Priority
     let waitTime = "45 mins";
-    if (currentTriageData.priority === 'red') waitTime = "Immediate (0 mins)";
-    else if (currentTriageData.priority === 'yellow') waitTime = "15 mins";
+    if (triageData.priority === 'red') waitTime = "Immediate (0 mins)";
+    else if (triageData.priority === 'yellow') waitTime = "15 mins";
     else waitTime = `${Math.floor(Math.random() * 30) + 30} mins`;
 
     // Multi-Agent Execution Pipeline with Fallbacks
     let safetyReview, billingInfo, allergyAlert;
     try {
       [safetyReview, billingInfo, allergyAlert] = await Promise.all([
-        runSafetyReviewAgent(currentTriageData).catch(e => {
+        runSafetyReviewAgent(triageData).catch(e => {
           console.error("Safety AI Error:", e);
           return { safetyNotes: "Safety AI temporarily unavailable.", isApproved: true };
         }),
-        runBillingAgent(currentTriageData).catch(e => {
+        runBillingAgent(triageData).catch(e => {
           console.error("Billing AI Error:", e);
           return { icd10Code: "PENDING", estimatedCostINR: "PENDING", billingNotes: "Billing AI temporarily unavailable." };
         }),
-        runPharmacovigilanceAgent(currentTriageData, pastMedicalHistory).catch(e => {
+        runPharmacovigilanceAgent(triageData, pastMedicalHistory).catch(e => {
           console.error("Pharma AI Error:", e);
           return { hasRisk: false, alertMessage: "Pharma AI temporarily unavailable." };
         })
@@ -352,9 +369,7 @@ const PatientKiosk = ({ onTriageComplete }) => {
     }
 
     const finalData = {
-      ...currentTriageData,
-      measuredBpm: bpm,
-      visualPainIndex: painIndex,
+      ...triageData,
       estimatedWaitTime: waitTime,
       safetyReview: safetyReview,
       billingInfo: billingInfo,
@@ -364,6 +379,20 @@ const PatientKiosk = ({ onTriageComplete }) => {
     };
     
     setIsProcessing(false);
+    await createAppointment({
+      patientId,
+      doctorId: "AI Doctor",
+      date: new Date().toISOString(),
+      time: new Date().toLocaleTimeString(),
+      status: "Pending",
+    });
+
+    await savePatientRecord({
+      patientId,
+      diagnosis: finalData.suspectedCondition || "Unknown",
+      prescription: "",
+      notes: JSON.stringify(finalData),
+    });
     onTriageComplete(finalData); // Send to Doctor Dashboard
     
     // Speak wait time
@@ -652,9 +681,7 @@ const PatientKiosk = ({ onTriageComplete }) => {
             </div>
           </div>
         </>
-      ) : (
-        <TouchlessVitals onComplete={handleVitalsComplete} />
-      )}
+      ) : null}
     </div>
   );
 };

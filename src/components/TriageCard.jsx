@@ -396,40 +396,7 @@ const TriageCard = ({ data }) => {
           <PharmacyPrescriptionWidget suggestedMeds={data.suggestedMedications} patientId={data.patientId} location={data.location} coords={data.coords} />
         </div>
 
-        <div className="data-group">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h4>Vitals & Objective Findings</h4>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              {data.measuredBpm && (
-                <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #ef4444', padding: '0.4rem 1rem', borderRadius: '20px', color: '#ef4444', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', boxShadow: '0 0 10px rgba(239, 68, 68, 0.2)' }}>
-                  <HeartPulse size={18} className="animate-pulse" /> {data.measuredBpm} BPM (Live rPPG)
-                </div>
-              )}
-              {data.visualPainIndex && (
-                <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid #f59e0b', padding: '0.4rem 1rem', borderRadius: '20px', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold' }}>
-                  <Activity size={18} /> Pain Index: {data.visualPainIndex}/10
-                </div>
-              )}
-              {data.mentalDistressIndex && (
-                <div style={{ background: data.mentalDistressIndex === 'High' ? 'rgba(239, 68, 68, 0.1)' : data.mentalDistressIndex === 'Medium' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)', border: `1px solid ${data.mentalDistressIndex === 'High' ? '#ef4444' : data.mentalDistressIndex === 'Medium' ? '#f59e0b' : '#10b981'}`, padding: '0.4rem 1rem', borderRadius: '20px', color: data.mentalDistressIndex === 'High' ? '#ef4444' : data.mentalDistressIndex === 'Medium' ? '#f59e0b' : '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold' }} title={`Agent 6 Sentiment Analysis: ${data.sentimentReasoning}`}>
-                  <Activity size={18} /> Distress (MDI): {data.mentalDistressIndex}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="vitals-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {data.vitalsToCheck.map((vital, i) => (
-              <div key={i} className="vital-item" style={{ padding: '0.6rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#fff', fontSize: '0.9rem', fontWeight: '500' }}>
-                  <HeartPulse size={14} style={{ color: '#ef4444' }} /> {typeof vital === 'object' ? vital.name : vital}
-                </div>
-                {typeof vital === 'object' && vital.reason && (
-                  <span style={{ fontSize: '0.75rem', color: '#a1a1aa' }}>{vital.reason}</span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+
 
         <div className="data-group original-transcript">
           <h4>Clinical Interaction Log ({data.language})</h4>

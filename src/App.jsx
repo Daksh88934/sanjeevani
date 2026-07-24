@@ -10,7 +10,6 @@ import MultiAgent from './components/MultiAgent';
 import DigitalTwin from './components/DigitalTwin';
 import GenomicScanner from './components/GenomicScanner';
 import ArtTherapy from './components/ArtTherapy';
-import PainTracker from './components/PainTracker';
 import CustomAlert from './components/CustomAlert';
 import { epidemicService } from './services/EpidemicService';
 import './styles/App.css';
@@ -21,6 +20,7 @@ function App() {
   const [outbreakData, setOutbreakData] = useState(null);
 
   const handleTriageComplete = (newTriageData) => {
+    console.log("Triage received:", newTriageData);
     setTriageQueue((prevQueue) => {
       if (prevQueue.some(item => item.id === newTriageData.id)) return prevQueue;
       return [newTriageData, ...prevQueue];
@@ -65,9 +65,6 @@ function App() {
           <li className={activeModule === 'art-therapy' ? 'active' : ''} onClick={() => setActiveModule('art-therapy')}>
             <Palette size={20} /> <span>Art Therapy</span>
           </li>
-          <li className={activeModule === 'pain-tracker' ? 'active' : ''} onClick={() => setActiveModule('pain-tracker')}>
-            <Camera size={20} /> <span>Pain Tracker</span>
-          </li>
         </ul>
         
         <div className="system-status">
@@ -93,7 +90,6 @@ function App() {
         {activeModule === 'digital-twin' && <DigitalTwin />}
         {activeModule === 'genomic' && <GenomicScanner />}
         {activeModule === 'art-therapy' && <ArtTherapy />}
-        {activeModule === 'pain-tracker' && <PainTracker />}
       </main>
     </div>
   );

@@ -152,12 +152,7 @@ export const downloadPDF = async (reportType, patientId, reportData) => {
     if (reportData.suggestedMedications && reportData.suggestedMedications.length > 0) addSection('Suggested Medications / E-Prescription', reportData.suggestedMedications.join(', '));
     if (reportData.clinicalCitation) addSection('Clinical Evidence Source', reportData.clinicalCitation);
 
-    if (reportData.vitalsToCheck && reportData.vitalsToCheck.length > 0) {
-      const vitalsStr = reportData.vitalsToCheck.map(v => typeof v === 'object' ? `${v.name} (${v.reason})` : v).join(', ');
-      addSection('Vitals To Check', vitalsStr);
-    }
-    if (reportData.measuredBpm) addSection('Measured Vitals (BPM)', reportData.measuredBpm);
-    if (reportData.visualPainIndex) addSection('Visual Pain Index', reportData.visualPainIndex + '/10');
+
     if (reportData.mentalDistressIndex) addSection('Mental Distress Index', `${reportData.mentalDistressIndex} - ${reportData.sentimentReasoning || ''}`);
     
     if (reportData.pastMedicalHistory) {
