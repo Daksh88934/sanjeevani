@@ -1,11 +1,11 @@
-import Index from "./pages/Index";
+import SanjeevaniApp from "./sanjeevani/SanjeevaniApp";
 import NotFound from "./pages/NotFound";
 
 export const routers = [
   {
     path: "/",
     name: "home",
-    element: <Index />,
+    element: <SanjeevaniApp />,
   },
   /* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */
   {

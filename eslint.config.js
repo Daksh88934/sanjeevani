@@ -30,5 +30,15 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unused-vars": "off",
     },
-  }
+  },
+  // Ported Sanjeevani AI code: cloned verbatim from a JS repo whose data shapes
+  // are dynamic AI JSON payloads, so `any` is appropriate (matches the source).
+  // Placed LAST so it overrides the recommended rules above for these files.
+  {
+    files: ["src/sanjeevani/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "react-refresh/only-export-components": "off",
+    },
+  },
 );

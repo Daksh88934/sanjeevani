@@ -98,27 +98,27 @@ All under new folder `src/sanjeevani/`:
 (`recharts`, `framer-motion`, `lucide-react` already present in this project).
 
 ## Implementation checklist
-- [ ] Add ML/PDF/QR dependencies listed above
-- [ ] Create `sanjeevani/services/localDb.ts` (records + discharged patients + guardian alerts, localStorage + `useLocalQuery` hook)
-- [ ] Create `sanjeevani/services/AIEngine.ts`, `VisionService.ts` reading OpenRouter key from localStorage, with clear "missing key" error surfaced to UI
-- [ ] Create `sanjeevani/components/Settings.tsx` (API key input, saved to localStorage) + add "Settings" to sidebar nav
-- [ ] Port `SpeechService`, `AlertService`, `EpidemicService`, `rPPGService`, `ReportService` (PDF-only, Mongo fetch removed)
-- [ ] Port `PatientKiosk`, `TouchlessVitals`, `LiveECGGraph`, `TriageCard`, `DoctorDashboard`, `EpidemicAlert`, `CustomAlert`, `CustomLanguageSelector` (core triage flow)
-- [ ] Port `PatientRecords`, `GuardianDashboard`, `GuardianAlerts`, `PatientFollowUp` wired to `localDb` instead of Convex
-- [ ] Port `PharmaAI`, `VisionAI` (Cloudinary removed → base64), `MultiAgent`, `DigitalTwin`, `GenomicScanner`, `ArtTherapy` (Cloudinary removed → base64), `PainTracker`, `AnatomicalHeatmap`, `AutoScribe`, `PharmacyPrescriptionWidget`
-- [ ] Port `SanjeevaniApp.tsx` (sidebar, mobile hamburger, module switching) as ported from `App.jsx`
-- [ ] Port scoped CSS into `sanjeevani/styles/sanjeevani.css`, imported only by `SanjeevaniApp.tsx`
-- [ ] Update `src/router.tsx` to render `SanjeevaniApp` at `/`; remove now-unused `Index.tsx`
-- [ ] Remove/ignore Convex, Mongoose, Cloudinary, Vercel `/api` code (never ported)
+- [passed] Add ML/PDF/QR dependencies listed above
+- [passed] Create `sanjeevani/services/localDb.ts` (records + discharged patients + guardian alerts, localStorage + `useLocalQuery` hook)
+- [passed] Create `sanjeevani/services/AIEngine.ts`, `VisionService.ts` reading OpenRouter key from localStorage, with clear "missing key" error surfaced to UI
+- [passed] Create `sanjeevani/components/Settings.tsx` (API key input, saved to localStorage) + add "Settings" to sidebar nav
+- [passed] Port `SpeechService`, `AlertService`, `EpidemicService`, `rPPGService`, `ReportService` (PDF-only, Mongo fetch removed)
+- [passed] Port `PatientKiosk`, `TouchlessVitals`, `LiveECGGraph`, `TriageCard`, `DoctorDashboard`, `EpidemicAlert`, `CustomAlert`, `CustomLanguageSelector` (core triage flow)
+- [passed] Port `PatientRecords`, `GuardianDashboard`, `GuardianAlerts`, `PatientFollowUp` wired to `localDb` instead of Convex
+- [passed] Port `PharmaAI`, `VisionAI` (Cloudinary removed → base64), `MultiAgent`, `DigitalTwin`, `GenomicScanner`, `ArtTherapy` (Cloudinary removed → base64), `PainTracker`, `AnatomicalHeatmap`, `AutoScribe`, `PharmacyPrescriptionWidget`
+- [passed] Port `SanjeevaniApp.tsx` (sidebar, mobile hamburger, module switching) as ported from `App.jsx`
+- [passed] Port scoped CSS into `sanjeevani/styles/sanjeevani.css`, imported only by `SanjeevaniApp.tsx`
+- [passed] Update `src/router.tsx` to render `SanjeevaniApp` at `/`; remove now-unused `Index.tsx`
+- [passed] Remove/ignore Convex, Mongoose, Cloudinary, Vercel `/api` code (never ported)
 
 ## Verification checklist
-- [ ] App loads at `/` showing Sanjeevani sidebar + Triage Kiosk by default, no console errors
-- [ ] Settings: entering an OpenRouter key persists across reload (localStorage)
-- [ ] Without a key set, triggering an AI action (e.g. submit symptom) shows the "missing key" message, not a silent crash
-- [ ] With a valid key, full triage flow works: speak/type symptom → follow-up question(s) → vitals scan (webcam permission) → TriageCard renders with priority/DDx/meds
-- [ ] "Save Triage Record" adds an entry visible in Patient Records after navigating there, and persists after page reload
-- [ ] "Discharge to Guardian AI" creates a record visible in Guardian Dashboard; follow-up magic link (`?followup=<id>`) opens `PatientFollowUp` modal
-- [ ] Each remaining module (Pharma AI, Vision AI, Multi-Agent, Digital Twin, Genomic Scanner, Art Therapy, Pain Tracker, Auto-Scribe) renders and its primary action calls AI without crashing
-- [ ] PDF download button produces a downloadable file for at least Triage and one other module
-- [ ] Mobile width (<768px) shows hamburger menu that opens/closes the sidebar drawer
-- [ ] `pnpm lint` / build passes with no TypeScript errors introduced by the port
+- [passed] App loads at `/` showing Sanjeevani sidebar + Triage Kiosk by default, no console errors
+- [manual-required] Settings: entering an OpenRouter key persists across reload (localStorage)
+- [manual-required] Without a key set, triggering an AI action (e.g. submit symptom) shows the "missing key" message, not a silent crash
+- [manual-required] With a valid key, full triage flow works: speak/type symptom → follow-up question(s) → vitals scan (webcam permission) → TriageCard renders with priority/DDx/meds
+- [manual-required] "Save Triage Record" adds an entry visible in Patient Records after navigating there, and persists after page reload
+- [manual-required] "Discharge to Guardian AI" creates a record visible in Guardian Dashboard; follow-up magic link (`?followup=<id>`) opens `PatientFollowUp` modal
+- [manual-required] Each remaining module (Pharma AI, Vision AI, Multi-Agent, Digital Twin, Genomic Scanner, Art Therapy, Pain Tracker, Auto-Scribe) renders and its primary action calls AI without crashing
+- [manual-required] PDF download button produces a downloadable file for at least Triage and one other module
+- [manual-required] Mobile width (<768px) shows hamburger menu that opens/closes the sidebar drawer
+- [passed] `pnpm lint` / build passes with no TypeScript errors introduced by the port
