@@ -145,7 +145,7 @@ function App() {
         <div className="sidebar-logo">
           <div className="logo-pulse"></div>
           <h1>SANJEEVANI</h1>
-          <span>AI COMMAND CENTER</span>
+          <span>CLINICAL PORTAL</span>
         </div>
         
         <ul className="nav-menu">
@@ -190,14 +190,14 @@ function App() {
           {/* Feedback Button */}
           <button 
             onClick={() => setShowFeedbackModal(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c4b5fd', padding: '0.6rem 1.2rem', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease', fontFamily: 'JetBrains Mono', fontSize: '0.85rem' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(2, 132, 199, 0.15)', border: '1px solid rgba(2, 132, 199, 0.3)', color: '#38bdf8', padding: '0.6rem 1.2rem', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease', fontFamily: 'JetBrains Mono', fontSize: '0.85rem' }}
           >
             <MessageSquare size={16} /> Feedback
           </button>
 
           {/* User Section */}
           {currentUser ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'rgba(10, 15, 29, 0.8)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '30px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'rgba(15, 23, 42, 0.85)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary)' }}>
                 <User size={16} />
                 <span style={{ fontSize: '0.85rem', fontWeight: 'bold', fontFamily: 'JetBrains Mono' }}>{currentUser.name} ({currentUser.role})</span>
@@ -213,7 +213,7 @@ function App() {
           ) : (
             <button 
               onClick={() => setShowAuthModal(true)}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(90deg, #8b5cf6, #3b82f6)', border: 'none', color: 'white', padding: '0.6rem 1.4rem', borderRadius: '30px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(90deg, #0ea5e9, #14b8a6)', border: 'none', color: 'white', padding: '0.6rem 1.4rem', borderRadius: '30px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(2, 132, 199, 0.25)' }}
             >
               <LogIn size={16} /> Sign In
             </button>
@@ -253,8 +253,8 @@ function App() {
             )}
 
             <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.8rem', color: 'var(--primary)', letterSpacing: '2px', textShadow: '0 0 10px rgba(0,240,255,0.3)', margin: '0' }}>SANJEEVANI GATEWAY</h2>
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.4rem', fontFamily: 'JetBrains Mono' }}>SECURE AI ENTRY TERMINAL</p>
+              <h2 style={{ fontSize: '1.8rem', color: 'var(--primary)', letterSpacing: '2px', textShadow: '0 0 10px rgba(0,240,255,0.3)', margin: '0' }}>Sanjeevani Portal</h2>
+              <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.4rem', fontFamily: 'JetBrains Mono' }}>CLINICAL ACCESS TERMINAL</p>
             </div>
 
             {/* Tabs */}
@@ -349,9 +349,9 @@ function App() {
               {/* Submit */}
               <button 
                 type="submit"
-                style={{ width: '100%', padding: '0.9rem', background: 'linear-gradient(90deg, #8b5cf6, #3b82f6)', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', marginTop: '0.5rem', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.4)', transition: 'all 0.3s ease' }}
+                style={{ width: '100%', padding: '0.9rem', background: 'linear-gradient(90deg, #0ea5e9, #14b8a6)', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', marginTop: '0.5rem', boxShadow: '0 4px 15px rgba(2, 132, 199, 0.3)', transition: 'all 0.3s ease' }}
               >
-                {isLoginTab ? 'ACCESS CENTER' : 'REGISTER PROFILE'}
+                {isLoginTab ? 'LOG IN' : 'CREATE ACCOUNT'}
               </button>
             </form>
           </div>
@@ -371,8 +371,8 @@ function App() {
             </button>
 
             <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.5rem', color: '#c4b5fd', letterSpacing: '1px', margin: '0' }}>Feedback Terminal</h2>
-              <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.3rem', fontFamily: 'JetBrains Mono' }}>RATE YOUR EXPERIENCE</p>
+              <h2 style={{ fontSize: '1.5rem', color: 'var(--primary)', letterSpacing: '1px', margin: '0' }}>Clinical Feedback</h2>
+              <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.3rem', fontFamily: 'JetBrains Mono' }}>SHARE YOUR EXPERIENCE</p>
             </div>
 
             {feedbackSuccessMsg ? (

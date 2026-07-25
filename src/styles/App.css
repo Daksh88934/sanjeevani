@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #040711;
-  --bg-panel: rgba(10, 15, 29, 0.65);
-  --primary: #00f0ff;
-  --primary-glow: rgba(0, 240, 255, 0.4);
-  --accent: #8b5cf6;
-  --accent-glow: rgba(139, 92, 246, 0.4);
+  --bg-dark: #0b0f19;
+  --bg-panel: rgba(15, 23, 42, 0.75);
+  --primary: #0284c7; /* Clinical sky blue */
+  --primary-glow: rgba(2, 132, 199, 0.25);
+  --accent: #0f766e; /* Medical teal */
+  --accent-glow: rgba(15, 118, 110, 0.25);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   
-  --status-red: #ff2a2a;
-  --status-red-bg: rgba(255, 42, 42, 0.15);
+  --status-red: #ef4444;
+  --status-red-bg: rgba(239, 68, 68, 0.12);
   --status-yellow: #f59e0b;
-  --status-yellow-bg: rgba(245, 158, 11, 0.15);
-  --status-green: #00ff88;
-  --status-green-bg: rgba(0, 255, 136, 0.15);
+  --status-yellow-bg: rgba(245, 158, 11, 0.12);
+  --status-green: #10b981;
+  --status-green-bg: rgba(16, 185, 129, 0.12);
 
-  --glass-border: rgba(0, 240, 255, 0.15);
-  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(2, 132, 199, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.04);
 }
 
 * {
@@ -34,11 +34,9 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-    radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.1), transparent 30%),
-    radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.1), transparent 30%);
-  background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+    radial-gradient(circle at 15% 50%, rgba(15, 118, 110, 0.12), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(2, 132, 199, 0.12), transparent 35%);
+  background-size: 100% 100%;
 }
 
 .super-app-layout {
