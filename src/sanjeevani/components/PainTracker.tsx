@@ -4,7 +4,6 @@ import * as tf from "@tensorflow/tfjs";
 import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
 import {
   Camera,
-  Activity,
   AlertTriangle,
   CheckCircle,
   ShieldAlert,
@@ -207,7 +206,7 @@ const PainTracker = () => {
       }
 
       let combinedScore = 0;
-      if (currentEmotion === "HAPPY" || currentEmotion === "LAUGHING" || currentEmotion === "NEUTRAL") {
+      if (currentEmotion === "HAPPY SMILE" || currentEmotion === "LAUGHING" || currentEmotion === "NEUTRAL") {
         combinedScore = 0;
       } else {
         combinedScore = Math.max(facialPainScore, vocalScore);
@@ -309,7 +308,7 @@ const PainTracker = () => {
   }, []);
 
   const getAlertLevel = () => {
-    if (emotionState === "HAPPY" || emotionState === "LAUGHING")
+    if (emotionState === "HAPPY SMILE" || emotionState === "LAUGHING")
       return { color: "#22c55e", icon: <CheckCircle size={24} />, text: "PATIENT HAPPY / RELAXED" };
     if (painIndex > 70)
       return { color: "#ff4d4d", icon: <ShieldAlert size={24} />, text: "CRITICAL PAIN / DISTRESS DETECTED" };

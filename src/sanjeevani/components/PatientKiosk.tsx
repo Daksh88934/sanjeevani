@@ -52,7 +52,6 @@ const PatientKiosk = ({ onTriageComplete }: Props) => {
   const [patientId, setPatientId] = useState("");
 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [currentFollowUpQuestion, setCurrentFollowUpQuestion] = useState("");
 
   const [pastMedicalHistory, setPastMedicalHistory] = useState<any>(null);
   const [isScanningReport, setIsScanningReport] = useState(false);
@@ -301,7 +300,6 @@ const PatientKiosk = ({ onTriageComplete }: Props) => {
         setCurrentTriageData(triageData);
         setStep("vitals");
       } else if (aiQuestion && aiQuestion.trim() !== "") {
-        setCurrentFollowUpQuestion(aiQuestion);
         setChatHistory([...newHistory, { role: "ai", content: aiQuestion }]);
         speakText(aiQuestion);
       } else {
@@ -975,7 +973,6 @@ const PatientKiosk = ({ onTriageComplete }: Props) => {
       ) : (
         <TouchlessVitals onComplete={handleVitalsComplete} />
       )}
-      {currentFollowUpQuestion && null}
     </div>
   );
 };

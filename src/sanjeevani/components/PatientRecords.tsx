@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type * as React from "react";
-import { Database, FolderOpen, Trash2, Activity, Calendar } from "lucide-react";
+import { Database, FolderOpen, Trash2, Calendar } from "lucide-react";
 import TriageCard from "./TriageCard";
 import { showAlert } from "../services/AlertService";
 import { useQuery, useMutation, localApi } from "../services/localDb";
@@ -199,7 +199,6 @@ const PatientRecords = () => {
           ))}
         </div>
       )}
-      <Activity style={{ display: "none" }} />
     </div>
   );
 };

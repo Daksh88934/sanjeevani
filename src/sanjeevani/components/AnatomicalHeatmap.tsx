@@ -32,7 +32,9 @@ const AnatomicalHeatmap = ({ affectedPart }: Props) => {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  const part = affectedPart ? affectedPart.toLowerCase().trim() : "general";
+  // AIEngine returns underscored values (e.g. "left_arm"); normalize to spaces
+  // so it matches the space-separated keys used by getGlow()/getCalloutCoords().
+  const part = affectedPart ? affectedPart.toLowerCase().trim().replace(/_/g, " ") : "general";
 
   const getGlow = (partName: string): GlowStyle => {
     const isActive = part === partName;
@@ -56,16 +58,12 @@ const AnatomicalHeatmap = ({ affectedPart }: Props) => {
       case "abdomen":
         return { x: 150, y: 220 };
       case "left arm":
-      case "left_arm":
         return { x: 220, y: 180 };
       case "right arm":
-      case "right_arm":
         return { x: 80, y: 180 };
       case "left leg":
-      case "left_leg":
         return { x: 180, y: 350 };
       case "right leg":
-      case "right_leg":
         return { x: 120, y: 350 };
       default:
         return null;

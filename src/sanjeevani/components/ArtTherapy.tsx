@@ -382,7 +382,7 @@ const ArtTherapy = () => {
                 <button
                   onClick={() => {
                     setPrompt("");
-                    setImageUrl("");
+                    setImageUrl(null);
                     setAiReport(null);
                     setErrorMsg("");
                     setPatientId("");
