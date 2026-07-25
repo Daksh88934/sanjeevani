@@ -7,7 +7,7 @@ import CustomLanguageSelector from './CustomLanguageSelector';
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-const PatientKiosk = ({ onTriageComplete }) => {
+const PatientKiosk = ({ onTriageComplete, currentUser }) => {
   const createUser = useMutation(api.users.createUser);
 const createAppointment = useMutation(api.appointments.createAppointment);
 const saveChat = useMutation(api.chat.saveChat);
@@ -26,7 +26,13 @@ const savePatientRecord = useMutation(api.patientRecords.addPatientRecord);
   const [patientLocation, setPatientLocation] = useState('');
   const [patientCoords, setPatientCoords] = useState(null);
   const [isLocating, setIsLocating] = useState(false);
-  const [patientId, setPatientId] = useState('');
+  const [patientId, setPatientId] = useState(currentUser?.name || '');
+
+  useEffect(() => {
+    if (currentUser?.name) {
+      setPatientId(currentUser.name);
+    }
+  }, [currentUser]);
 
   // Chat History for interactive triage
   const [chatHistory, setChatHistory] = useState([]);
